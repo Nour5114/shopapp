@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:shop_app/screens/signup_screen.dart';
 
-
 class LoginScreen extends StatefulWidget {
-
   const LoginScreen({Key? key}) : super(key: key);
 
   @override
@@ -12,12 +10,10 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   var passController = TextEditingController();
-  var mobileController = TextEditingController();
+  var emailController = TextEditingController();
   bool isHidden = true;
 
   final formKey = GlobalKey<FormState>();
-
-
 
   @override
   void initState() {
@@ -29,7 +25,7 @@ class _LoginScreenState extends State<LoginScreen> {
     Color primaryColor = const Color(0xFF53B175);
     return Scaffold(
       body: Padding(
-        padding: const EdgeInsets.all(10.0),
+        padding: const EdgeInsets.symmetric(horizontal: 20.0),
         child: SafeArea(
           child: Center(
             child: SingleChildScrollView(
@@ -37,46 +33,72 @@ class _LoginScreenState extends State<LoginScreen> {
                 key: formKey,
                 child: AutofillGroup(
                   child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
+                      Align(
+                          alignment: Alignment.center,
+                          child: Image.asset(
+                            'assets/images/loginlogo.png',
+                            width: 55,
+                            height: 60,
+                          )),
+                      const SizedBox(
+                        height: 20,
+                      ),
                       const Text(
-                        'تسجيل الدخول',
-                        style: TextStyle(fontSize: 40),
+                        'Login',
+                        style: TextStyle(
+                            fontSize: 30, fontWeight: FontWeight.bold),
+                      ),
+                      const SizedBox(
+                        height: 15,
+                      ),
+                      const Text(
+                        'Enter your emails and password',
+                        style: TextStyle(
+                            color: Colors.grey, fontWeight: FontWeight.bold),
                       ),
                       const SizedBox(
                         height: 55,
                       ),
+                      const Text(
+                        'Email',
+                        style: TextStyle(
+                            color: Colors.grey, fontWeight: FontWeight.bold),
+                      ),
                       TextFormField(
-                        autofillHints: const <String>[
-                          AutofillHints.telephoneNumber
-                        ],
+                        autofillHints: const <String>[AutofillHints.email],
                         cursorColor: primaryColor,
-                        keyboardType: TextInputType.phone,
-                        controller: mobileController,
+                        keyboardType: TextInputType.text,
+                        controller: emailController,
                         validator: (val) {
                           if (val == null || val.isEmpty) {
-                            return 'الرجاء ادخال الموبايل';
+                            return 'please enter email';
                           }
                           return null;
                         },
                         decoration: InputDecoration(
-                          hintText: 'رقم الموبايل',
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10),
+                          enabledBorder: const UnderlineInputBorder(
+                            borderSide: BorderSide(
+                              color: Colors.grey,
+                            ),
                           ),
-                          focusedBorder: OutlineInputBorder(
-                            borderRadius:
-                                const BorderRadius.all(Radius.circular(10)),
-                            borderSide: BorderSide(color: primaryColor),
+                          focusedBorder: const UnderlineInputBorder(
+                            borderSide: BorderSide(color: Color(0xFF53B175)),
                           ),
                           suffixIcon: Icon(
-                            Icons.phone,
+                            Icons.email,
                             color: primaryColor,
                           ),
                         ),
                       ),
                       const SizedBox(
                         height: 15,
+                      ),
+                      const Text(
+                        'Password',
+                        style: TextStyle(
+                            color: Colors.grey, fontWeight: FontWeight.bold),
                       ),
                       TextFormField(
                         autofillHints: const <String>[AutofillHints.password],
@@ -85,13 +107,20 @@ class _LoginScreenState extends State<LoginScreen> {
                         controller: passController,
                         validator: (val) {
                           if (val == null || val.isEmpty) {
-                            return 'الرجاء ادخال كلمه السر';
+                            return 'please enter password';
                           }
                           return null;
                         },
                         obscureText: isHidden,
                         decoration: InputDecoration(
-                          hintText: 'كلمه السر',
+                          enabledBorder: const UnderlineInputBorder(
+                            borderSide: BorderSide(
+                              color: Colors.grey,
+                            ),
+                          ),
+                          focusedBorder: const UnderlineInputBorder(
+                            borderSide: BorderSide(color: Color(0xFF53B175)),
+                          ),
                           suffixIcon: InkWell(
                             child: isHidden
                                 ? Icon(
@@ -111,60 +140,56 @@ class _LoginScreenState extends State<LoginScreen> {
                         ),
                       ),
                       const SizedBox(
-                        height: 60,
+                        height: 10,
                       ),
-                      InkWell(
-                          onTap: () {
+                      const Align(
+                          alignment: Alignment.centerRight,
+                          child: Text(
+                            'Forgot Password?',
+                            style: TextStyle(
+                                color: Colors.grey,
+                                fontWeight: FontWeight.bold),
+                          )),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      Container(
+                        width: double.infinity,
+                        margin: const EdgeInsets.symmetric(
+                            horizontal: 20, vertical: 20),
+                        child: ElevatedButton(
+                          onPressed: () {
                             if (formKey.currentState!.validate()) {
-                                //login(context);
+                              //login(context);
                             } else {
                               ScaffoldMessenger.of(context).showSnackBar(
                                   const SnackBar(
-                                      content:
-                                          Text('Please fill the field')));
+                                      content: Text('Please fill the field')));
                             }
-                            //login(context);
                           },
-                          borderRadius: BorderRadius.circular(10),
-                          child: Container(
-                            width: double.infinity,
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10),
-                                color: primaryColor),
-                            padding: const EdgeInsets.symmetric(vertical: 10),
-                            alignment: Alignment.center,
-                            child: const Text(
-                              'تسجيل الدخول',
-                              style: TextStyle(
-                                  fontSize: 20, color: Colors.white),
+                          style: ElevatedButton.styleFrom(
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(20.0),
                             ),
-                          )),
-                      // OutlinedButton(
-                      //     style: OutlinedButton.styleFrom(
-                      //         backgroundColor: Colors.grey.shade200,
-                      //         padding: const EdgeInsets.all(10) //<-- SEE HERE
-                      //         ),
-                      //     onPressed: () async {
-                      //       await service.showScheduledNotification(
-                      //         id: 0,
-                      //         title: 'Notification Title',
-                      //         body: 'Some body',
-                      //         seconds: 4,
-                      //       );
-                      //     },
-                      //     child: const Text(
-                      //       'اظهار الاشعار',
-                      //       style: TextStyle(fontSize: 20),
-                      //     )),
-                      const SizedBox(
-                        height: 20,
+                            backgroundColor: const Color(0xFF53B175),
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 20, vertical: 20),
+                            textStyle: const TextStyle(
+                              fontSize: 18,
+                            ),
+                          ),
+                          child: const Text(
+                            'Log In',
+                            style: TextStyle(fontSize: 20),
+                          ),
+                        ),
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           const Text(
-                            'لا تمتلك حسابا حتي الان؟',
-                            style: TextStyle(fontSize: 20),
+                            'Don’t have an account?',
+                            style: TextStyle(fontSize: 18),
                           ),
                           const SizedBox(
                             width: 10,
@@ -177,11 +202,10 @@ class _LoginScreenState extends State<LoginScreen> {
                                       builder: (context) =>
                                           const SignUpScreen()));
                             },
-                            child: Text(
-                              'انشاء حساب جديد',
+                            child: const Text(
+                              'Sing up',
                               style: TextStyle(
-                                  color: Theme.of(context).primaryColor,
-                                  fontSize: 20),
+                                  color: Color(0xFF53B175), fontSize: 18),
                             ),
                           )
                         ],
@@ -202,7 +226,7 @@ class _LoginScreenState extends State<LoginScreen> {
     SharedPreferences pref = await SharedPreferences.getInstance();
     var response = await http.post(Uri.parse(loginURL),
         body: ({
-          'mobile': mobileController.text,
+          'mobile': emailController.text,
           'password': passController.text,
           //'device_token': token,
         }));

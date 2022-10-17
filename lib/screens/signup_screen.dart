@@ -1,8 +1,5 @@
-import 'dart:convert';
 import 'package:flutter/material.dart';
-
 import 'login_screen.dart';
-
 
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({Key? key}) : super(key: key);
@@ -12,14 +9,13 @@ class SignUpScreen extends StatefulWidget {
 }
 
 class _SignUpScreenState extends State<SignUpScreen> {
-  var mobileController = TextEditingController();
-  var nameController = TextEditingController();
+  var emailController = TextEditingController();
+  var usernameController = TextEditingController();
   var passController = TextEditingController();
   var refillPassController = TextEditingController();
   bool isHiddenPassword = true;
   bool isHiddenRefillPassword = true;
   final formKey = GlobalKey<FormState>();
-
 
   @override
   void initState() {
@@ -28,238 +24,220 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
   @override
   Widget build(BuildContext context) {
-    Color primaryColor = Theme.of(context).primaryColor;
-    return Directionality(
-      textDirection: TextDirection.rtl,
-      child: Scaffold(
-        appBar: AppBar(
-          backgroundColor: primaryColor,
-          automaticallyImplyLeading: false,
-          title: const Text(
-            'Taqeem Teachers',
-            style: TextStyle(fontSize: 25),
-          ),
-          centerTitle: true,
-        ),
-        body: SafeArea(
-          child: Center(
-            child: SingleChildScrollView(
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Form(
-                  key: formKey,
-                  child: AutofillGroup(
-                    child: Column(
-                      children: [
-                        const Text(
-                          'تسجيل حساب جديد',
-                          style: TextStyle(fontSize: 40),
-                        ),
-                        const SizedBox(
-                          height: 55,
-                        ),
-                        TextFormField(
-                          autofillHints: const <String>[AutofillHints.name],
-                          cursorColor: primaryColor,
-                          keyboardType: TextInputType.text,
-                          controller: nameController,
-                          validator: (val) {
-                            if (val == null || val.isEmpty) {
-                              return 'الرجاء ادخال الاسم';
-                            }
-                            return null;
-                          },
-                          decoration: InputDecoration(
-                            labelText: 'الاسم',
-                            labelStyle: const TextStyle(fontSize: 20,color: Colors.black),
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                            focusedBorder:  OutlineInputBorder(
-                              borderRadius: const BorderRadius.all(Radius.circular(10)),
-                              borderSide: BorderSide(color: primaryColor),
-                            ),
-                            suffixIcon: Icon(
-                              Icons.person,
-                              color: primaryColor,
-                            ),
-                          ),
-                        ),
-                        const SizedBox(
-                          height: 15,
-                        ),
-                        TextFormField(
-                          autofillHints: const <String>[AutofillHints.telephoneNumber],
-                          cursorColor: primaryColor,
-                          keyboardType: TextInputType.phone,
-                          controller: mobileController,
-                          validator: (val) {
-                            if (val == null || val.isEmpty) {
-                              return 'الرجاء ادخال رقم الموبايل';
-                            }
-                            return null;
-                          },
-                          decoration: InputDecoration(
-                            labelText: 'رقم الموبايل',
-                            labelStyle: const TextStyle(fontSize: 20,color: Colors.black),
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                            focusedBorder:  OutlineInputBorder(
-                              borderRadius: const BorderRadius.all(Radius.circular(10)),
-                              borderSide: BorderSide(color: primaryColor),
-                            ),
-                            suffixIcon: Icon(
-                              Icons.phone,
-                              color: primaryColor,
+    return Scaffold(
+      body: SafeArea(
+        child: Center(
+          child: SingleChildScrollView(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20.0),
+              child: Form(
+                key: formKey,
+                child: AutofillGroup(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Align(
+                          alignment: Alignment.center,
+                          child: Image.asset(
+                            'assets/images/loginlogo.png',
+                            width: 55,
+                            height: 60,
+                          )),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      const Text(
+                        'Sign Up',
+                        style: TextStyle(
+                            fontSize: 30, fontWeight: FontWeight.bold),
+                      ),
+                      const SizedBox(
+                        height: 15,
+                      ),
+                      const Text(
+                        'Enter your credentials to continue',
+                        style: TextStyle(
+                            color: Colors.grey, fontWeight: FontWeight.bold),
+                      ),
+                      const SizedBox(
+                        height: 55,
+                      ),
+                      const Text(
+                        'Username',
+                        style: TextStyle(
+                            color: Colors.grey, fontWeight: FontWeight.bold),
+                      ),
+                      TextFormField(
+                        cursorColor: const Color(0xFF53B175),
+                        keyboardType: TextInputType.text,
+                        controller: usernameController,
+                        validator: (val) {
+                          if (val == null || val.isEmpty) {
+                            return 'please enter username';
+                          }
+                          return null;
+                        },
+                        decoration: const InputDecoration(
+                          enabledBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(
+                              color: Colors.grey,
                             ),
                           ),
-                        ),
-                        const SizedBox(
-                          height: 15,
-                        ),
-                        TextFormField(
-                          cursorColor: primaryColor,
-                          keyboardType: TextInputType.text,
-                          controller: passController,
-                          validator: (val) {
-                            if (val == null || val.isEmpty) {
-                              return 'الرجاء ادخال كلمه السر';
-                            }
-                            return null;
-                          },
-                          obscureText: isHiddenPassword,
-                          decoration: InputDecoration(
-                            labelText: 'كلمه السر',
-                            labelStyle: const TextStyle(fontSize: 20,color: Colors.black),
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(10),
-                              borderSide: BorderSide(color: primaryColor),
-                            ),
-                            focusedBorder:  OutlineInputBorder(
-                              borderRadius: const BorderRadius.all(Radius.circular(10)),
-                              borderSide: BorderSide(color: primaryColor),
-                            ),
-                            suffixIcon: InkWell(
-                              child: isHiddenPassword
-                                  ? Icon(
-                                      Icons.visibility,
-                                      color: primaryColor,
-                                    )
-                                  : Icon(
-                                      Icons.visibility_off,
-                                      color: primaryColor,
-                                    ),
-                              onTap: () {
-                                setState(() {
-                                  isHiddenPassword = !isHiddenPassword;
-                                });
-                              },
-                            ),
+                          focusedBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(color: Color(0xFF53B175)),
+                          ),
+                          suffixIcon: Icon(
+                            Icons.person,
+                            color: Color(0xFF53B175),
                           ),
                         ),
-                        const SizedBox(
-                          height: 15,
-                        ),
-                        TextFormField(
-                          cursorColor: primaryColor,
-                          keyboardType: TextInputType.text,
-                          controller: refillPassController,
-                          validator: (val) {
-                            if (val == null || val.isEmpty) {
-                              return 'الرجاء ادخال كلمه السر';
-                            }
-                            return null;
-                          },
-                          obscureText: isHiddenRefillPassword,
-                          decoration: InputDecoration(
-                            labelText: 'تأكيد كلمه السر',
-                            labelStyle: const TextStyle(fontSize: 20,color: Colors.black),
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(10),
-                              borderSide: BorderSide(color: primaryColor),
-                            ),
-                            focusedBorder:  OutlineInputBorder(
-                              borderRadius: const BorderRadius.all(Radius.circular(10)),
-                              borderSide: BorderSide(color: primaryColor),
-                            ),
-                            suffixIcon: InkWell(
-                              child: isHiddenRefillPassword
-                                  ? Icon(
-                                Icons.visibility,
-                                color: primaryColor,
-                              )
-                                  : Icon(
-                                Icons.visibility_off,
-                                color: primaryColor,
-                              ),
-                              onTap: () {
-                                setState(() {
-                                  isHiddenRefillPassword = !isHiddenRefillPassword;
-                                });
-                              },
+                      ),
+                      const SizedBox(
+                        height: 15,
+                      ),
+                      const Text(
+                        'Email',
+                        style: TextStyle(
+                            color: Colors.grey, fontWeight: FontWeight.bold),
+                      ),
+                      TextFormField(
+                        cursorColor: const Color(0xFF53B175),
+                        keyboardType: TextInputType.phone,
+                        controller: emailController,
+                        validator: (val) {
+                          if (val == null || val.isEmpty) {
+                            return 'please enter email';
+                          }
+                          return null;
+                        },
+                        decoration: const InputDecoration(
+                          enabledBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(
+                              color: Colors.grey,
                             ),
                           ),
+                          focusedBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(color: Color(0xFF53B175)),
+                          ),
+                          suffixIcon: Icon(
+                            Icons.email,
+                            color: Color(0xFF53B175),
+                          ),
                         ),
-                        const SizedBox(
-                          height: 50,
-                        ),
-                        InkWell(
+                      ),
+                      const SizedBox(
+                        height: 15,
+                      ),
+                      const Text(
+                        'Password',
+                        style: TextStyle(
+                            color: Colors.grey, fontWeight: FontWeight.bold),
+                      ),
+                      TextFormField(
+                        cursorColor: const Color(0xFF53B175),
+                        keyboardType: TextInputType.text,
+                        controller: passController,
+                        validator: (val) {
+                          if (val == null || val.isEmpty) {
+                            return 'please enter password';
+                          }
+                          return null;
+                        },
+                        obscureText: isHiddenPassword,
+                        decoration: InputDecoration(
+                          enabledBorder: const UnderlineInputBorder(
+                            borderSide: BorderSide(
+                              color: Colors.grey,
+                            ),
+                          ),
+                          focusedBorder: const UnderlineInputBorder(
+                            borderSide: BorderSide(color: Color(0xFF53B175)),
+                          ),
+                          suffixIcon: InkWell(
+                            child: isHiddenPassword
+                                ? const Icon(
+                                    Icons.visibility,
+                                    color: Color(0xFF53B175),
+                                  )
+                                : const Icon(
+                                    Icons.visibility_off,
+                                    color: Color(0xFF53B175),
+                                  ),
                             onTap: () {
-                              if (formKey.currentState!.validate()) {
-                                  //signup(context);
-                              } else {
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                    const SnackBar(
-                                        content: Text('Please fill the field')));
-                              }
+                              setState(() {
+                                isHiddenPassword = !isHiddenPassword;
+                              });
                             },
-                            borderRadius: BorderRadius.circular(10),
-                            child: Container(
-                              width: double.infinity,
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(10),
-                                  color: primaryColor),
-                              padding: const EdgeInsets.symmetric(vertical: 10),
-                              alignment: Alignment.center,
-                              child: const Text(
-                                'تسجيل',
-                                style:
-                                    TextStyle(fontSize: 20, color: Colors.white),
-                              ),
-                            )),
-                        const SizedBox(
-                          height: 20,
+                          ),
                         ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            const Text(
-                              ' تمتلك حسابا؟',
-                              style: TextStyle(fontSize: 20),
+                      ),
+                      const SizedBox(height: 15,),
+                      const Text(
+                        'By continuing you agree to our Terms of Service and Privacy Policy.',
+                        style: TextStyle(
+                            color: Colors.grey,),
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      Container(
+                        width: double.infinity,
+                        margin: const EdgeInsets.symmetric(
+                            horizontal: 20, vertical: 20),
+                        child: ElevatedButton(
+                          onPressed: () {
+                            if (formKey.currentState!.validate()) {
+                              //signup(context);
+                            } else {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(
+                                      content: Text('Please fill the field')));
+                            }
+                          },
+                          style: ElevatedButton.styleFrom(
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(20.0),
                             ),
-                            const SizedBox(
-                              width: 10,
+                            backgroundColor: const Color(0xFF53B175),
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 20, vertical: 20),
+                            textStyle: const TextStyle(
+                              fontSize: 18,
                             ),
-                            InkWell(
-                              onTap: () {
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) =>
-                                        const LoginScreen()));
-                              },
-                              child: Text(
-                                'تسجيل دخول',
-                                style: TextStyle(
-                                    color: Theme.of(context).primaryColor,
-                                    fontSize: 20),
-                              ),
-                            )
-                          ],
+                          ),
+                          child: const Text(
+                            'Sing Up',
+                            style: TextStyle(fontSize: 18),
+                          ),
                         ),
-                      ],
-                    ),
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          const Text(
+                            ' Already have an account?',
+                            style: TextStyle(fontSize: 18),
+                          ),
+                          const SizedBox(
+                            width: 10,
+                          ),
+                          InkWell(
+                            onTap: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          const LoginScreen()));
+                            },
+                            child: const Text(
+                              'Log In',
+                              style: TextStyle(
+                                  color: Color(0xFF53B175), fontSize: 20),
+                            ),
+                          )
+                        ],
+                      ),
+                    ],
                   ),
                 ),
               ),
@@ -270,14 +248,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
     );
   }
 
-
-
 /*  Future<void> signup(context) async {
     //String? token = await FirebaseMessaging.instance.getToken();
     var response = await http.post(Uri.parse(signupURL),
         body: ({
-          'name': nameController.text,
-          'mobile': mobileController.text,
+          'name': usernameController.text,
+          'mobile': emailController.text,
           'password': passController.text,
           'birthdate' : birthdateInput.text,
           'city_id' : selectedCityId
@@ -301,5 +277,4 @@ class _SignUpScreenState extends State<SignUpScreen> {
     SharedPreferences pref = await SharedPreferences.getInstance();
     pref.setString(key, value);
   }*/
-
 }
