@@ -8,13 +8,15 @@ void main() {
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Shop App',
-      home: SplashScreen(),
+      home: const SplashScreen(),
+      theme: ThemeData(
+        primaryColor: const Color(0xFF53B175),
+      ),
     );
   }
 }

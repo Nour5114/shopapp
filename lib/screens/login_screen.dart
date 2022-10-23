@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:shop_app/screens/signup_screen.dart';
 
+import 'home/home_screen.dart';
+
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
 
@@ -159,13 +161,17 @@ class _LoginScreenState extends State<LoginScreen> {
                             horizontal: 20, vertical: 20),
                         child: ElevatedButton(
                           onPressed: () {
-                            if (formKey.currentState!.validate()) {
+                            Navigator.pushReplacement(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => const HomeScreen()));
+                            /* if (formKey.currentState!.validate()) {
                               //login(context);
                             } else {
                               ScaffoldMessenger.of(context).showSnackBar(
                                   const SnackBar(
                                       content: Text('Please fill the field')));
-                            }
+                            }*/
                           },
                           style: ElevatedButton.styleFrom(
                             shape: RoundedRectangleBorder(
