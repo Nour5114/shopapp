@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shop_app/screens/product_details_screen.dart';
 
 class ShopTab extends StatefulWidget {
   const ShopTab({Key? key}) : super(key: key);
@@ -216,7 +217,7 @@ class _ShopTabState extends State<ShopTab> {
                 ),
                 const SizedBox(height: 20,),
                 SizedBox(
-                  height: 200,
+                  height: 220,
                   child: ListView.builder(
                     scrollDirection: Axis.horizontal,
                     shrinkWrap: true,
@@ -242,6 +243,10 @@ class _ShopTabState extends State<ShopTab> {
                               child:
                                   Image.asset(exclusiveOffer[index]['image'])),
                           Text(exclusiveOffer[index]['name'],style: const TextStyle(fontWeight: FontWeight.bold,fontSize: 18)),
+                          const Text(
+                            '1kg,price',
+                            style: TextStyle(fontWeight: FontWeight.bold,fontSize: 16, color: Colors.grey),
+                          ),
                           Row(
                             children: [
                               Text(exclusiveOffer[index]['price'],style: const TextStyle(fontWeight: FontWeight.bold,fontSize: 16),),
@@ -309,38 +314,47 @@ class _ShopTabState extends State<ShopTab> {
                           width: 1.0,
                         ),
                       ),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          SizedBox(
-                              width: 150,
-                              child: Image.asset(bestSelling[index]['image'])),
-                          Text(bestSelling[index]['name'],style: const TextStyle(fontWeight: FontWeight.bold,fontSize: 18)),
-                          Row(
-                            children: [
-                              Text(bestSelling[index]['price'],style: const TextStyle(fontWeight: FontWeight.bold,fontSize: 16),),
-                              const SizedBox(width: 50,),
-                              SizedBox(
-                                width: 50,
-                                child: ElevatedButton(
-                                  onPressed: () {},
-                                  style: ButtonStyle(
-                                    padding: MaterialStateProperty.all(EdgeInsets.zero),
-                                    backgroundColor:
-                                    MaterialStateProperty.all<Color>(primaryColor),
-                                    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                                      RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(15),
+                      child: GestureDetector(
+                     onTap: (){
+                       Navigator.push(
+                           context,
+                           MaterialPageRoute(
+                               builder: (context) =>
+                               const ProductDetailsScreen()));
+                     },
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            SizedBox(
+                                width: 150,
+                                child: Image.asset(bestSelling[index]['image'])),
+                            Text(bestSelling[index]['name'],style: const TextStyle(fontWeight: FontWeight.bold,fontSize: 18)),
+                            Row(
+                              children: [
+                                Text(bestSelling[index]['price'],style: const TextStyle(fontWeight: FontWeight.bold,fontSize: 16),),
+                                const SizedBox(width: 50,),
+                                SizedBox(
+                                  width: 50,
+                                  child: ElevatedButton(
+                                    onPressed: () {},
+                                    style: ButtonStyle(
+                                      padding: MaterialStateProperty.all(EdgeInsets.zero),
+                                      backgroundColor:
+                                      MaterialStateProperty.all<Color>(primaryColor),
+                                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                                        RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.circular(15),
+                                        ),
                                       ),
                                     ),
+                                    child: const Icon(Icons.add),
                                   ),
-                                  child: const Icon(Icons.add),
-                                ),
-                              )
-                            ],
-                          ),
-                        ],
+                                )
+                              ],
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   ),
@@ -423,6 +437,10 @@ class _ShopTabState extends State<ShopTab> {
                               width: 150,
                               child: Image.asset(groceries[index]['image'])),
                           Text(groceries[index]['name'],style: const TextStyle(fontWeight: FontWeight.bold,fontSize: 18)),
+                          const Text(
+                            '1kg,price',
+                            style: TextStyle(fontWeight: FontWeight.bold,fontSize: 16, color: Colors.grey),
+                          ),
                           Row(
                             children: [
                               Text(groceries[index]['price'],style: const TextStyle(fontWeight: FontWeight.bold,fontSize: 16),),
